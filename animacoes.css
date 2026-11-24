@@ -1,0 +1,174 @@
+/* =====================================================================
+   ANIMAÇÕES — cada efeito é ligado por uma classe no <body> do index.html
+   Para DESLIGAR um efeito: apague a classe dele do <body>.
+   Para LIGAR de volta: escreva a classe de novo.
+   Para remover TUDO: apague as linhas animacoes.css e animacoes.js do index.html.
+
+   anim-neve      → neve caindo no fundo
+   anim-titulo    → entrada do título + brilho dourado
+   anim-entradas  → cada card entra de um jeito diferente (troca de página)
+   anim-icones    → emoji de cada presente com sua animação própria
+   anim-hover     → card sobe ao passar o mouse
+   anim-botao     → botões com "pulinho" ao clicar
+   anim-parallax  → emojis e letras gigantes ao fundo que se mexem com o scroll
+   anim-marquee   → faixas inclinadas com texto correndo (aceleram quando você rola)
+   anim-revelar   → elementos aparecem ao rolar + "FELIZ NATAL" gigante no final
+   anim-progresso → barra de progresso da rolagem no topo
+   anim-cartoes   → cards deslizam, giram e mudam de tamanho conforme você rola
+   anim-fundo     → fundo com cores mudando de tom (verde → azul → vinho → roxo)
+   ===================================================================== */
+
+@keyframes subir{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:none}}
+
+/* ---------- 1. NEVE ---------- */
+.neve{position:fixed;inset:0;overflow:hidden;pointer-events:none;z-index:0}
+.flake{position:absolute;top:-10px;border-radius:50%;background:#fff;animation:cair-neve linear infinite}
+@keyframes cair-neve{to{transform:translate3d(var(--sway,0),110vh,0)}}
+body[class*="anim-"] header,body[class*="anim-"] main,body[class*="anim-"] footer,.faixa:not(.faixa-fundo),.final{position:relative;z-index:1}
+
+/* ---------- 2. TÍTULO ---------- */
+body.anim-titulo .eyebrow{display:inline-block;animation:subir .8s ease-out backwards}
+body.anim-titulo h1{
+  background:linear-gradient(100deg,var(--gold) 40%,#fff 50%,var(--gold) 60%);
+  background-size:250% 100%;
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+  animation:subir .9s .15s ease-out backwards,brilho 6s 1.2s ease-in-out infinite;
+}
+body.anim-titulo header p{animation:subir .9s .3s ease-out backwards}
+@keyframes brilho{0%{background-position:150% 0}45%,100%{background-position:-50% 0}}
+
+/* ---------- 3. ENTRADAS (uma diferente por card) ---------- */
+body.anim-entradas h2{animation:subir .5s ease-out backwards}
+body.anim-entradas article{animation-duration:.8s;animation-timing-function:ease-out;animation-fill-mode:backwards}
+body.anim-entradas article[data-entrada=subir]{animation-name:e-subir}
+body.anim-entradas article[data-entrada=esquerda]{animation-name:e-esquerda}
+body.anim-entradas article[data-entrada=direita]{animation-name:e-direita}
+body.anim-entradas article[data-entrada=zoom]{animation-name:e-zoom}
+body.anim-entradas article[data-entrada=girar]{animation-name:e-girar}
+body.anim-entradas article[data-entrada=cair]{animation-name:e-cair}
+body.anim-entradas article[data-entrada=flip]{animation-name:e-flip}
+body.anim-entradas article[data-entrada=elastico]{animation-name:e-elastico}
+body.anim-entradas .grid article:nth-child(2){animation-delay:.1s}
+body.anim-entradas .grid article:nth-child(3){animation-delay:.2s}
+body.anim-entradas .grid article:nth-child(4){animation-delay:.3s}
+body.anim-entradas .grid article:nth-child(n+5){animation-delay:.4s}
+@keyframes e-subir{from{opacity:0;transform:translateY(40px)}}
+@keyframes e-esquerda{from{opacity:0;transform:translateX(-70px)}}
+@keyframes e-direita{from{opacity:0;transform:translateX(70px)}}
+@keyframes e-zoom{from{opacity:0;transform:scale(.5)}}
+@keyframes e-girar{from{opacity:0;transform:rotate(-15deg) scale(.7)}}
+@keyframes e-flip{from{opacity:0;transform:perspective(700px) rotateY(-90deg)}}
+@keyframes e-cair{0%{opacity:0;transform:translateY(-80px)}60%{opacity:1;transform:translateY(12px)}80%{transform:translateY(-5px)}100%{transform:none}}
+@keyframes e-elastico{0%{opacity:0;transform:scale(.3)}55%{opacity:1;transform:scale(1.08)}75%{transform:scale(.96)}100%{transform:none}}
+
+/* ---------- 4. EMOJIS ANIMADOS ---------- */
+body.anim-icones .icone{animation-duration:2.4s;animation-iteration-count:infinite;animation-timing-function:ease-in-out}
+body.anim-icones .icone[data-loop=balancar]{animation-name:balancar;transform-origin:50% 0}
+body.anim-icones .icone[data-loop=pular]{animation-name:pular}
+body.anim-icones .icone[data-loop=girar]{animation-name:girar;animation-duration:6s;animation-timing-function:linear}
+body.anim-icones .icone[data-loop=pulsar]{animation-name:pulsar;animation-duration:1.4s}
+body.anim-icones .icone[data-loop=brilhar]{animation-name:brilhar}
+body.anim-icones .icone[data-loop=flutuar]{animation-name:flutuar;animation-duration:3s}
+body.anim-icones .icone[data-loop=tremer]{animation-name:tremer;animation-duration:3s}
+body.anim-icones .icone[data-loop=respirar]{animation-name:respirar;animation-duration:3.5s}
+body.anim-icones .icone[data-loop=ondular]{animation-name:ondular;animation-duration:2s}
+body.anim-icones .icone[data-loop=piscar]{animation-name:piscar;animation-duration:1.8s}
+body.anim-icones .icone[data-loop=flip]{animation-name:flip;animation-duration:3.5s}
+body.anim-icones .icone[data-loop=saltitar]{animation-name:saltitar;animation-duration:1.6s}
+@keyframes balancar{0%,100%{transform:rotate(-14deg)}50%{transform:rotate(14deg)}}
+@keyframes pular{0%,100%{transform:translateY(0)}50%{transform:translateY(-14px)}}
+@keyframes girar{to{transform:rotate(360deg)}}
+@keyframes pulsar{0%,100%{transform:scale(1)}50%{transform:scale(1.25)}}
+@keyframes brilhar{0%,100%{transform:scale(1) rotate(0);filter:brightness(1)}50%{transform:scale(1.2) rotate(15deg);filter:brightness(1.5) drop-shadow(0 0 8px var(--gold))}}
+@keyframes flutuar{0%,100%{transform:translate(0,0)}33%{transform:translate(4px,-9px)}66%{transform:translate(-4px,-4px)}}
+@keyframes tremer{0%,60%,100%{transform:rotate(0)}65%,75%,85%{transform:rotate(-10deg)}70%,80%,90%{transform:rotate(10deg)}95%{transform:rotate(0)}}
+@keyframes respirar{0%,100%{transform:scale(1)}50%{transform:scale(1.14)}}
+@keyframes ondular{0%,100%{transform:skewX(-8deg) translateX(-3px)}50%{transform:skewX(8deg) translateX(3px)}}
+@keyframes piscar{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.35;transform:scale(.9)}}
+@keyframes flip{0%,55%{transform:perspective(500px) rotateY(0)}100%{transform:perspective(500px) rotateY(360deg)}}
+@keyframes saltitar{0%,100%{transform:translateY(0) rotate(0)}25%{transform:translateY(-10px) rotate(-8deg)}50%{transform:translateY(0) rotate(0)}75%{transform:translateY(-10px) rotate(8deg)}}
+
+/* ---------- 5. HOVER NOS CARDS ---------- */
+body.anim-hover article{transition:transform .25s ease,border-color .25s,box-shadow .25s,background .25s}
+body.anim-hover article:hover{transform:translateY(-6px);border-color:var(--gold);background:#ffffff12;box-shadow:0 14px 30px #0006}
+body.anim-hover article a{transition:letter-spacing .25s}
+body.anim-hover article a:hover{letter-spacing:.05em}
+
+/* ---------- 6. BOTÕES ---------- */
+body.anim-botao button{transition:background .25s,color .25s,transform .15s,opacity .25s}
+body.anim-botao button:not(:disabled):hover{transform:translateY(-2px)}
+body.anim-botao button:not(:disabled):active{transform:scale(.95)}
+body.anim-botao button[aria-pressed=true]{animation:pulo .35s ease-out}
+@keyframes pulo{50%{transform:scale(1.08)}}
+
+/* ---------- 7. FUNDO PARALLAX (criado pelo animacoes.js) ---------- */
+.fundo{position:fixed;inset:0;overflow:hidden;pointer-events:none;z-index:0}
+.forma{position:absolute;top:0;line-height:1;will-change:transform;user-select:none}
+.faixa-fundo{position:absolute;left:0;width:100%;font:900 italic 22vw/1 system-ui,sans-serif;text-transform:uppercase;
+  color:transparent;-webkit-text-stroke:2px var(--gold);opacity:.1}
+.faixa-fundo.f1{top:14%}
+.faixa-fundo.f2{top:56%}
+body.anim-parallax h1{transform:translateY(calc(var(--y,0)*.3px)) scale(max(.75,calc(1 - var(--y,0)*.0005)))}
+body.anim-parallax header p{opacity:max(0,calc(1 - var(--y,0)*.003))}
+
+/* ---------- 8. FAIXAS (marquee) ---------- */
+body.anim-marquee{overflow-x:hidden}
+.faixa{width:108vw;margin:44px -4vw;padding:14px 0;white-space:nowrap;overflow:hidden;
+  font:900 italic clamp(2rem,6vw,4.2rem)/1.1 system-ui,sans-serif;text-transform:uppercase;letter-spacing:-.02em}
+.faixa.a{background:var(--gold);color:var(--green);transform:rotate(-2deg)}
+.faixa.b{background:var(--red);color:var(--cream);transform:rotate(1.5deg)}
+.faixa-fundo.faixa{margin:0;padding:0;background:none}
+.faixa-trilho{display:flex;width:max-content;will-change:transform}
+.faixa-grupo{display:flex;flex:none}
+.faixa-grupo span{padding-right:.6em}
+
+/* ---------- 9. REVELAR AO ROLAR + FINAL ---------- */
+body.anim-revelar main{min-height:80vh}
+body.anim-revelar .revelar{opacity:0;transform:translateY(40px);transition:opacity .7s ease,transform .7s cubic-bezier(.2,.9,.2,1)}
+body.anim-revelar .revelar.visivel{opacity:1;transform:none}
+.final{min-height:70vh;display:grid;place-items:center;text-align:center;padding:60px 20px;overflow:hidden}
+.final-texto{font:900 italic clamp(3.5rem,17vw,12rem)/.9 system-ui,sans-serif;text-transform:uppercase;letter-spacing:-.04em;color:var(--gold)}
+.final .linha{display:block;overflow:hidden;padding:.05em .1em}
+.final .linha:nth-child(2){color:transparent;-webkit-text-stroke:2px var(--gold)}
+.final .letra{display:inline-block;transform:translateY(110%);transition:transform .8s cubic-bezier(.2,.9,.2,1);transition-delay:calc(var(--i)*70ms)}
+.final.visivel .letra{transform:none}
+.final .adesivo{display:inline-block;margin-top:24px;font-size:clamp(3rem,10vw,7rem);transform:rotate(calc(var(--y,0)*.25deg))}
+
+/* ---------- 10. PROGRESSO ---------- */
+.progresso{position:fixed;top:0;left:0;width:100%;height:4px;z-index:10;transform-origin:0 50%;transform:scaleX(0);
+  background:linear-gradient(90deg,var(--gold),var(--red))}
+
+/* ---------- 11. CARDS COM SCROLL ----------
+   O JS grava --p (posição do card na tela: -1 em cima, 0 no meio, 1 embaixo)
+   e --d (lado: 1 ou -1, alterna entre os cards). */
+body.anim-cartoes article{
+  translate:calc(var(--p,0)*var(--d,1)*-26px) calc(var(--p,0)*-34px);
+  rotate:calc(var(--p,0)*var(--d,1)*3deg);
+  scale:calc(1 - max(var(--p,0),var(--p,0)*-1)*.05);
+}
+body.anim-cartoes .icone{rotate:calc(var(--p,0)*var(--d,1)*50deg)}
+
+/* ---------- 12. FUNDO COM CORES MUDANDO ---------- */
+@property --c1{syntax:'<color>';inherits:false;initial-value:#285345}
+@property --c2{syntax:'<color>';inherits:false;initial-value:#102d25}
+@property --c3{syntax:'<color>';inherits:false;initial-value:#081d18}
+body.anim-fundo{
+  background:radial-gradient(ellipse at calc(50% + var(--y,0)*.02%) calc(var(--y,0)*.03%),var(--c1),var(--c2) 55%,var(--c3));
+  background-attachment:fixed;
+  animation:tons 40s ease-in-out infinite;
+}
+@keyframes tons{
+  0%,100%{--c1:#285345;--c2:#102d25;--c3:#081d18}   /* verde */
+  25%{--c1:#1f4f5c;--c2:#0e2b36;--c3:#06161d}       /* azul petróleo */
+  50%{--c1:#5a2434;--c2:#2d1019;--c3:#19080e}      /* vinho */
+  75%{--c1:#3d2a63;--c2:#1c1233;--c3:#0e0820}      /* roxo */
+}
+
+/* Respeita quem desativou animações no celular/computador */
+@media (prefers-reduced-motion:reduce){
+  .neve,.fundo,.faixa,.progresso{display:none}
+  body.anim-fundo{animation:none}
+  body.anim-revelar .revelar{opacity:1;transform:none}
+  .final .letra{transform:none}
+  body[class*="anim-"] *{animation:none!important;transition:none!important}
+}
